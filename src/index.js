@@ -24,7 +24,7 @@ var Player = React.createClass({
     onEnd: React.PropTypes.func
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       autoPlay: false,
       loop: false,
@@ -34,7 +34,7 @@ var Player = React.createClass({
     };
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       playing: this.props.autoPlay,
       duration: 0,
@@ -43,7 +43,7 @@ var Player = React.createClass({
   },
 
   // component states
-  toggle: function() {
+  toggle: function () {
     if (this.state.playing) {
       this.setPaused();
     } else {
@@ -51,21 +51,21 @@ var Player = React.createClass({
     }
   },
 
-  setPlaying: function() {
+  setPlaying: function () {
     this.setState({playing: true}, this.sync);
   },
-  setPaused: function() {
+  setPaused: function () {
     this.setState({playing: false}, this.sync);
   },
 
-  seek: function(time) {
+  seek: function (time) {
     var audioTag = this.refs.audioTag.getDOMNode();
     audioTag.currentTime = time;
   },
 
   // sync all non-props
   // back to the dom element
-  sync: function() {
+  sync: function () {
     var audioTag = this.refs.audioTag.getDOMNode();
 
     // Prevent sync issues at end of file
@@ -83,13 +83,13 @@ var Player = React.createClass({
 
     if (!isNaN(audioTag.duration)) {
       this.setState({
-        duration: Math.floor(audioTag.duration*10)/10,
-        position: Math.floor(audioTag.currentTime*10)/10
+        duration: Math.floor(audioTag.duration * 10) / 10,
+        position: Math.floor(audioTag.currentTime * 10) / 10
       });
     }
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     // hacks around react bug
     // TODO: break this out into an audio wrapper
     var audioTag = this.refs.audioTag.getDOMNode();
@@ -105,7 +105,7 @@ var Player = React.createClass({
     this.sync();
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     // hacks around react bug
     // TODO: break this out into an audio wrapper
     var audioTag = this.refs.audioTag.getDOMNode();
@@ -118,7 +118,7 @@ var Player = React.createClass({
     }
   },
 
-  render: function(){
+  render: function () {
     var audioTag = React.DOM.audio({
       ref: 'audioTag',
       key: 'audioTag',
@@ -142,7 +142,7 @@ var Player = React.createClass({
         key: 'artwork',
         className: 'hymn-artwork',
         style: {
-          backgroundImage: 'url('+this.props.artwork+')'
+          backgroundImage: 'url(' + this.props.artwork + ')'
         }
       });
     }
