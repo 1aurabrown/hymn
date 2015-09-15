@@ -170,7 +170,7 @@ var Player = React.createClass({
     var timeDisplay = React.DOM.p({
       ref: 'timeDisplay',
       key: 'timeDisplay'
-    }, this._secondstoHHMSS(this.state.position) + '/' + this._secondstoHHMSS(this.state.duration));
+    }, this._secondsToHHMSS(this.state.position) + '/' + this._secondsToHHMSS(this.state.duration));
 
     var info = React.DOM.div({
       ref: 'info',
@@ -239,15 +239,15 @@ var Player = React.createClass({
     return container;
   },
 
-  _secondstoHHMSS(seconds, delimiter) {
+  _secondsToHHMSS: function (seconds, delimiter) {
     var _delimiter = delimiter || ':';
 
     // Only works up to 24 hours
-    var hours = parseInt(seconds / 3600 ) % 24;
-    var minutes = parseInt(seconds / 60) % 24;
-    var seconds = parseInt(seconds % 60);
+    var hours = parseInt(seconds / 3600, 10) % 24;
+    var minutes = parseInt(seconds / 60, 10) % 24;
+    var _seconds = parseInt(seconds % 60, 10);
 
-    return [hours, minutes, seconds].join(_delimiter);
+    return [hours, minutes, _seconds].join(_delimiter);
   }
 });
 
