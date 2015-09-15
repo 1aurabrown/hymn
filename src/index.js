@@ -166,11 +166,16 @@ var Player = React.createClass({
       title: this.props.artist
     }, this.props.artist) : null;
 
+    var timeDisplay = React.DOM.p({
+      ref: 'timeDisplay',
+      key: 'timeDisplay'
+    }, this._secondstoHHMSS(this.state.position) + '/' + this._secondstoHHMSS(this.state.duration));
+
     var info = React.DOM.div({
       ref: 'info',
       key: 'info',
       className: 'hymn-info'
-    }, [title, album, artist]);
+    }, [title, album, artist, timeDisplay]);
 
     // controls
     var playPauseClass = this.state.playing ? 'hymn-pause' : 'hymn-play';
@@ -214,6 +219,9 @@ var Player = React.createClass({
     if (this.props.onSkip) {
       controlChildren.push(skipButton);
     }
+    if (this.props.showTime) {
+      controlChildren.push(timeDisplay);
+    }
     var controls = React.DOM.div({
       ref: 'controls',
       key: 'controls',
@@ -228,6 +236,17 @@ var Player = React.createClass({
       style: this.props.style
     }, [artwork, info, controls, audioTag]);
     return container;
+  },
+
+  _secondstoHHMSS(seconds, delimiter) {
+    var _delimiter = delimiter || ':';
+
+    // Only works up to 24 hours
+    var hours = parseInt(seconds / 3600 ) % 24;
+    var minutes = parseInt(seconds / 60) % 24;
+    var seconds = parseInt(seconds % 60);
+
+    return [hours, minutes, seconds].join(_delimiter);
   }
 });
 
