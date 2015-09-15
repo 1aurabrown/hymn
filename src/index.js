@@ -124,6 +124,7 @@ var Player = React.createClass({
       key: 'audioTag',
       controls: false,
 
+      autoPlay: this.props.autoPlay,
       loop: this.props.loop,
       muted: this.props.muted,
       preload: this.props.preload,
