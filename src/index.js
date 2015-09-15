@@ -11,7 +11,7 @@ var Player = React.createClass({
     artist: React.PropTypes.string,
     album: React.PropTypes.string,
     artwork: React.PropTypes.string,
-    
+
     // stuff for the audio tag
     autoPlay: React.PropTypes.bool,
     loop: React.PropTypes.bool,
@@ -68,13 +68,19 @@ var Player = React.createClass({
   sync: function() {
     var audioTag = this.refs.audioTag.getDOMNode();
 
-    if (audioTag.paused && this.state.playing === true) {
+    // Prevent sync issues at end of file
+    if (audioTag.duration === audioTag.currentTime) {
+      audioTag.pause();
+      this.setState({ playing: false });
+      return;
+    }
+
+    if (this.state.playing) {
       audioTag.play();
-    } else if (!audioTag.paused && this.state.playing === false) {
+    } else if (!this.state.playing) {
       audioTag.pause();
     }
 
-    this.setState({playing: !audioTag.paused});
     if (!isNaN(audioTag.duration)) {
       this.setState({
         duration: Math.floor(audioTag.duration*10)/10,
